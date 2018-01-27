@@ -1,11 +1,17 @@
+// Imports
 const net = require('net');
 const employeeMod = require('./employeeModule');
 
+// Create a server instance
 const server = net.createServer( socket =>{
   console.log("Client connection...".red);
   socket.on('end', () => {
     console.log("Client disconnected...".red);
   });
+  /*
+  Listen for messages from clients and respond according to the switch
+  cases.  Use the employeeModule functionality for doing the data lookup.
+  */
   socket.on("data", (data) => {
     console.log(`...Received ${data}`.blue);
     const dataList = data.toString().split(" ");
@@ -26,10 +32,8 @@ const server = net.createServer( socket =>{
         socket.write('"Invalid request"');
     }
   });
-
-
 }
-
 );
 
+// Start server listening on port 3000
 server.listen(3000, () => console.log("Listening for connections"));
